@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173e3b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Mandolin Training Studio</title>
+<style>
+:root{--ink:#183b38;--muted:#637572;--paper:#f4f3ed;--card:#fffefa;--line:#e1e4dc;--accent:#205b54;--soft:#e5eeea;--gold:#d7a45b;--danger:#a23d32}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:#1c302e;font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header{background:var(--ink);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 20px}header .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}h1{font-size:23px;line-height:1.15;margin:5px 0 0;font-weight:650;letter-spacing:-.035em}
+main{max-width:680px;margin:0 auto;padding:18px 15px 24px}.screen{display:none}.screen.active{display:block}.section-title{font-size:20px;margin:4px 2px 14px;letter-spacing:-.025em}.subtle{color:var(--muted);font-size:13px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:13px;box-shadow:0 2px 8px #233b3510}.card h3{margin:0 0 12px;font-size:15px}.row{display:flex;gap:10px;align-items:center}.row>*{min-width:0;flex:1}.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}.field select,.field input{width:100%;border:1px solid #d8ded7;border-radius:10px;background:#fff;padding:11px 10px;font:inherit;color:inherit;min-height:43px}
+button{border:0;border-radius:12px;padding:12px 14px;font:600 14px/1.2 inherit;cursor:pointer;min-height:44px}button:disabled{opacity:.45;cursor:default}.primary{background:var(--accent);color:white}.secondary{background:var(--soft);color:var(--ink)}.quiet{background:transparent;color:var(--ink);border:1px solid var(--line)}.small{min-height:38px;padding:9px 11px;font-size:13px}.button-row{display:flex;gap:9px;margin:14px 0 8px}.button-row>*{flex:1}.note-strip{display:flex;gap:7px;overflow-x:auto;padding:8px 1px 12px;scrollbar-width:thin}.note{flex:0 0 auto;min-width:55px;text-align:center;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 9px;font-weight:650}.note.current{background:var(--accent);color:#fff;border-color:var(--accent)}.note.revealed{background:#edf2ed}.note.current.revealed{background:var(--accent);color:#fff}.status{font-size:13px;color:var(--muted);min-height:20px;margin-top:8px}.big-prompt{text-align:center;font-size:28px;font-weight:650;letter-spacing:-.03em;padding:26px 8px 18px}.answer{text-align:center;font-size:20px;font-weight:650;padding:2px 8px 18px}.progress{height:6px;background:#e4e7df;border-radius:20px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.setting-row label{font-size:14px}.setting-row input{width:20px;height:20px;accent-color:var(--accent)}.record-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.record-item{border:1px solid var(--line);border-radius:10px;padding:8px 7px;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:4px;background:#fff}.dot{width:7px;height:7px;border-radius:50%;background:#c5cbc4;display:inline-block;flex:none}.dot.done{background:#3b806c}.notice{background:#f6eee0;border-radius:11px;padding:11px 12px;font-size:13px;color:#694b26;margin:10px 0}.bottom-nav{position:fixed;z-index:5;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);background:#fffefa;border-top:1px solid var(--line);padding:8px 7px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px #223b3510}.bottom-nav button{background:transparent;color:#73817d;padding:8px 2px;min-height:49px;font-size:11px;font-weight:600}.bottom-nav button span{display:block;font-size:19px;line-height:1.3;margin-bottom:2px}.bottom-nav button.active{color:var(--accent);background:#eaf0eb}.hidden{display:none!important}.pill{display:inline-block;background:#eaf0eb;color:var(--ink);font-size:11px;padding:4px 8px;border-radius:99px}.bar{display:flex;justify-content:space-between;align-items:center;gap:10px}.bar strong{font-size:14px}.muted-line{height:1px;background:var(--line);margin:14px 0}.microphone-meter{height:8px;background:#e4e7df;border-radius:99px;overflow:hidden;margin:8px 0}.microphone-meter span{display:block;width:0;height:100%;background:#3c806a}
+@media(min-width:600px){main{padding-top:24px}.record-list{grid-template-columns:repeat(5,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Ear training · Mandolin</div><h1>Mandolin Training Studio</h1></header>
+<main>
+<section id="practice" class="screen active">
+<h2 class="section-title">Normal Practice</h2>
+<div class="card">
+<div class="controls">
+<div class="field"><label for="range">Pitch range</label><select id="range"><option value="G3-E6">G3–E6</option></select></div>
+<div class="field"><label for="length">Notes in sequence</label><select id="length"></select></div>
+<div class="field"><label for="perbar">Notes per bar</label><select id="perbar"><option value="1">1 note per bar</option><option value="4">4 notes per bar</option></select></div>
+<div class="field"><label for="bpm">Tempo (BPM)</label><select id="bpm"></select></div>
+</div>
+<div class="button-row"><button id="generate" class="primary">Generate</button><button id="reveal" class="secondary">Reveal</button></div>
+<div class="button-row"><button id="replay" class="quiet small">↻ Replay</button><button id="stop" class="quiet small">■ Stop</button></div>
+<div id="sequence" class="note-strip" aria-label="Note sequence"></div>
+<div id="practiceStatus" class="status">Generate a sequence to begin.</div>
+</div>
+<div class="card"><div class="bar"><strong>Audio readiness</strong><span class="pill" id="sampleBadge">0 samples</span></div><p class="subtle">Playback uses only your own recorded mandolin notes. Missing recordings are never replaced with synthetic tones.</p><button class="secondary small" data-goto="settings">Set up recordings</button></div>
+</section>
+
+<section id="fretboard" class="screen">
+<h2 class="section-title">Fretboard Trainer</h2>
+<div class="card">
+<div class="big-prompt" id="fretPrompt">Ready when you are</div><div class="answer hidden" id="fretAnswer"></div>
+<div class="button-row"><button id="fretStart" class="primary">Start</button><button id="fretReveal" class="secondary" disabled>Reveal</button><button id="fretNext" class="primary hidden">Next</button></div>
+<div class="muted-line"></div>
+<div class="controls">
+<div class="field"><label for="strings">Strings</label><select id="strings"></select></div>
+<div class="field"><label for="startFret">Start fret</label><select id="startFret"></select></div>
+<div class="field"><label for="endFret">End fret</label><select id="endFret"></select></div>
+</div><div class="status" id="fretStatus"></div>
+</div>
+</section>
+
+<section id="game" class="screen">
+<h2 class="section-title">Game</h2>
+<div class="card" id="gameIntro"><p class="subtle">Build your ear one note at a time.</p><button id="startGame" class="primary" style="width:100%">Start Game</button></div>
+<div class="card hidden" id="gamePlay">
+<div class="bar"><strong id="roundLabel">Round 1 · 1 note</strong><span class="pill" id="gameTempoLabel">100 BPM</span></div>
+<div class="field" style="margin-top:12px"><label for="gameBpm">Tempo (BPM)</label><select id="gameBpm"></select></div>
+<div id="gameSequence" class="note-strip"></div>
+<div class="button-row"><button id="gameReplay" class="secondary">Replay</button><button id="advance" class="primary">Advance</button></div>
+<div id="gameStatus" class="status"></div>
+</div>
+<div class="card"><p class="subtle">Game uses the same recorded notes as Practice. Record the pitches you need in Settings.</p></div>
+</section>
+
+<section id="settings" class="screen">
+<h2 class="section-title">Settings</h2>
+<div class="card"><h3>Note Display</h3>
+<div class="field"><label for="accidentals">Accidentals</label><select id="accidentals"><option value="sharp">Sharps (#)</option><option value="flat">Flats (♭)</option></select></div>
+<div class="setting-row" style="margin-top:14px"><label for="octaves">Show octave labels (e.g. G4)</label><input id="octaves" type="checkbox" checked></div>
+</div>
+<div class="card"><h3>Pitch Range</h3><div class="field"><label for="settingsRange">Available range</label><select id="settingsRange"><option value="G3-E6">G3–E6</option></select></div><p class="subtle">The range is limited to G3–E6 until additional pitches are recorded and approved.</p></div>
+<div class="card"><div class="bar"><h3 style="margin:0">Audio Calibration</h3><span class="pill" id="calCount">0 / 34</span></div>
+<p class="subtle">Record one real, plucked mandolin sample for each pitch. Allow microphone access when prompted. Recordings are stored on this device in this browser only.</p>
+<div class="notice">Use a quiet room and pluck the displayed note once, clearly, after the count-in. This first build records the microphone for about 3 seconds; it does not generate or substitute sounds.</div>
+<div class="field"><label for="recordPitch">Pitch to record / re-record</label><select id="recordPitch"></select></div>
+<div class="row" style="margin-top:10px"><button id="recordBtn" class="primary">Record pitch</button><button id="playSample" class="secondary">Play recording</button></div>
+<div class="progress"><span id="recordProgress"></span></div><div class="microphone-meter"><span id="micMeter"></span></div>
+<div id="recordStatus" class="status">Microphone has not been started.</div>
+<div class="muted-line"></div><div class="bar"><strong>Recorded pitches</strong><button id="clearSamples" class="quiet small">Clear all</button></div>
+<div id="recordList" class="record-list" style="margin-top:10px"></div>
+</div>
+</section>
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+<button class="active" data-tab="practice"><span>♫</span>Practice</button><button data-tab="fretboard"><span>⌁</span>Fretboard</button><button data-tab="game"><span>◎</span>Game</button><button data-tab="settings"><span>⚙</span>Settings</button>
+</nav>
+<script>
+(() => {
+const $=id=>document.getElementById(id);
+const midiNamesSharp=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const midiNamesFlat=['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B'];
+const minMidi=55,maxMidi=88;
+const pitches=Array.from({length:maxMidi-minMidi+1},(_,i)=>minMidi+i);
+const midiName=(m,withOct=true)=>{let names=$('accidentals').value==='flat'?midiNamesFlat:midiNamesSharp;let s=names[m%12];return withOct?s+(Math.floor(m/12)-1):s};
+const midiFull=m=>midiNamesSharp[m%12]+(Math.floor(m/12)-1);
+let seq=[], revealed=false, activeTimer=null, audioCtx=null, stream=null, recorder=null, chunks=[], meterRAF=0, recStart=0, recTimer=null, fretCurrent=null, gameRound=0, gameSeq=[];
+const dbName='MandolinTrainingStudioDB';
+function dbOpen(){return new Promise((resolve,reject)=>{let r=indexedDB.open(dbName,1);r.onupgradeneeded=()=>r.result.createObjectStore('samples');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function dbGet(k){let db=await dbOpen();return new Promise((res,rej)=>{let t=db.transaction('samples','readonly').objectStore('samples').get(String(k));t.onsuccess=()=>res(t.result||null);t.onerror=()=>rej(t.error)})}
+async function dbPut(k,v){let db=await dbOpen();return new Promise((res,rej)=>{let t=db.transaction('samples','readwrite');t.objectStore('samples').put(v,String(k));t.oncomplete=()=>res();t.onerror=()=>rej(t.error)})}
+async function dbAll(){let db=await dbOpen();return new Promise((res,rej)=>{let t=db.transaction('samples','readonly').objectStore('samples').getAllKeys();t.onsuccess=()=>res(t.result.map(Number));t.onerror=()=>rej(t.error)})}
+async function dbClear(){let db=await dbOpen();return new Promise((res,rej)=>{let t=db.transaction('samples','readwrite');t.objectStore('samples').clear();t.oncomplete=()=>res();t.onerror=()=>rej(t.error)})}
+async function countSamples(){try{return (await dbAll()).length}catch{return 0}}
+function fillSelect(id,vals,selected){let el=$(id);el.innerHTML='';vals.forEach(v=>{let o=document.createElement('option');o.value=typeof v==='object'?v.value:v;o.textContent=typeof v==='object'?v.label:v;el.appendChild(o)});if(selected!==undefined)el.value=selected}
+fillSelect('length',Array.from({length:32},(_,i)=>({value:i+1,label:String(i+1)})),4);
+fillSelect('bpm',Array.from({length:261},(_,i)=>({value:i+40,label:String(i+40)})),100);
+fillSelect('gameBpm',Array.from({length:61},(_,i)=>({value:i+40,label:String(i+40)})),100);
+fillSelect('strings',[{value:'all',label:'All strings'},{value:'G',label:'G string'},{value:'D',label:'D string'},{value:'A',label:'A string'},{value:'E',label:'E string'},{value:'GD',label:'G + D strings'},{value:'DA',label:'D + A strings'},{value:'AE',label:'A + E strings'},{value:'GDA',label:'G + D + A strings'},{value:'DAE',label:'D + A + E strings'}]);
+fillSelect('startFret',Array.from({length:24},(_,i)=>String(i+1)),'1');fillSelect('endFret',Array.from({length:24},(_,i)=>String(i+1)),'12');
+fillSelect('recordPitch',pitches.map(m=>({value:m,label:midiFull(m)})),55);
+function savePrefs(){let p={length:$('length').value,perbar:$('perbar').value,bpm:$('bpm').value,gameBpm:$('gameBpm').value,accidentals:$('accidentals').value,octaves:$('octaves').checked,strings:$('strings').value,startFret:$('startFret').value,endFret:$('endFret').value};try{localStorage.setItem('mts-prefs',JSON.stringify(p))}catch{}}
+function loadPrefs(){try{let p=JSON.parse(localStorage.getItem('mts-prefs')||'{}');Object.keys(p).forEach(k=>{let el=({length:'length',perbar:'perbar',bpm:'bpm',gameBpm:'gameBpm',accidentals:'accidentals',octaves:'octaves',strings:'strings',startFret:'startFret',endFret:'endFret'})[k];if(el&&$(el)){if(k==='octaves')$(el).checked=p[k];else $(el).value=p[k]}})}catch{}}
+loadPrefs();
+function noteLabel(m){return midiName(m,$('octaves').checked)}
+function showTab(id){stopPlayback();document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));window.scrollTo(0,0)}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.goto)));
+function randomSeq(n){return Array.from({length:n},()=>pitches[Math.floor(Math.random()*pitches.length)])}
+function renderSeq(container,arr,show=false,active=-1){container.innerHTML='';arr.forEach((m,i)=>{let el=document.createElement('div');el.className='note'+(show?' revealed':'')+(i===active?' current':'');el.textContent=show?noteLabel(m):'•';el.title=show?noteLabel(m):'Hidden note';container.appendChild(el);if(i===active)el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})})}
+function generate(){stopPlayback();seq=randomSeq(Number($('length').value));revealed=false;renderSeq($('sequence'),seq,false);$('practiceStatus').textContent='Sequence ready. Listen without looking, then Reveal to check.'}
+function noteDuration(){return 60000/Number($('bpm').value)}
+async function playOne(m){let blob=await dbGet(m);if(!blob)throw new Error('Missing recording for '+midiFull(m));if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')await audioCtx.resume();let buf=await blob.arrayBuffer();let decoded=await audioCtx.decodeAudioData(buf.slice(0));let src=audioCtx.createBufferSource();src.buffer=decoded;src.connect(audioCtx.destination);src.start();return Math.max(150,decoded.duration*1000)}
+function stopPlayback(){if(activeTimer){clearTimeout(activeTimer);activeTimer=null}if(audioCtx){try{audioCtx.suspend()}catch{}}document.querySelectorAll('.note.current').forEach(n=>n.classList.remove('current'))}
+async function playSequence(arr,container,show,tempo,done,intervalMs){stopPlayback();if(!arr.length)return;let index=0;const step=async()=>{if(index>=arr.length){activeTimer=null;if(done)done();return}if(show){renderSeq(container,arr,true,index)}else{renderSeq(container,arr,false,index)}try{await playOne(arr[index])}catch(e){$('practiceStatus').textContent=e.message+' — record this pitch in Settings.';stopPlayback();return}index++;activeTimer=setTimeout(step,intervalMs||60000/tempo)};step()}
+$('generate').onclick=generate;
+$('reveal').onclick=()=>{if(!seq.length)generate();revealed=true;renderSeq($('sequence'),seq,true);$('practiceStatus').textContent='Revealed sequence. Playing from the beginning.';playSequence(seq,$('sequence'),true,Number($('bpm').value),()=>{$('practiceStatus').textContent='Sequence complete. Notes remain visible.'},60000/Number($('bpm').value)*($('perbar').value==='1'?4:1))};
+$('replay').onclick=()=>{if(!seq.length){$('practiceStatus').textContent='Generate a sequence first.';return}playSequence(seq,$('sequence'),revealed,Number($('bpm').value),()=>{$('practiceStatus').textContent='Playback complete.'},60000/Number($('bpm').value)*($('perbar').value==='1'?4:1))};
+$('stop').onclick=()=>{stopPlayback();$('practiceStatus').textContent='Playback stopped. Your sequence is unchanged.'};
+['length','perbar','bpm','gameBpm','accidentals','octaves','strings','startFret','endFret'].forEach(id=>$(id).addEventListener('change',()=>{savePrefs();if(id==='accidentals'||id==='octaves'){if(seq.length)renderSeq($('sequence'),seq,revealed);if(fretCurrent!==null&&$('fretAnswer').classList.contains('hidden')===false)revealFret()}}));
+$('perbar').addEventListener('change',()=>{});
+const openStrings={G:55,D:62,A:69,E:76};
+function nextFret(){let choices=$('strings').value==='all'?Object.keys(openStrings):$('strings').value.split('');let a=Number($('startFret').value),b=Number($('endFret').value);if(a>b){let t=a;a=b;b=t}let st=choices[Math.floor(Math.random()*choices.length)],fr=a+Math.floor(Math.random()*(b-a+1));fretCurrent={st,fr,midi:openStrings[st]+fr};$('fretPrompt').textContent=st+' string · Fret '+fr;$('fretAnswer').classList.add('hidden');$('fretAnswer').textContent='';$('fretReveal').disabled=false;$('fretReveal').classList.remove('hidden');$('fretNext').classList.add('hidden');$('fretStatus').textContent='Find the note, then reveal the answer.'}
+function revealFret(){if(!fretCurrent)return;$('fretAnswer').textContent='Note: '+noteLabel(fretCurrent.midi);$('fretAnswer').classList.remove('hidden');$('fretReveal').classList.add('hidden');$('fretNext').classList.remove('hidden')}
+$('fretStart').onclick=()=>{nextFret();$('fretStart').classList.add('hidden')};$('fretReveal').onclick=revealFret;$('fretNext').onclick=nextFret;
+$('startGame').onclick=()=>{gameRound=1;startGameRound()};
+function startGameRound(){stopPlayback();$('gameIntro').classList.add('hidden');$('gamePlay').classList.remove('hidden');gameSeq=randomSeq(gameRound);$('roundLabel').textContent='Round '+gameRound+' · '+gameRound+' '+(gameRound===1?'note':'notes');$('gameTempoLabel').textContent=$('gameBpm').value+' BPM';renderSeq($('gameSequence'),gameSeq,false);$('gameStatus').textContent='Listen, then advance when ready.';playGame()}
+function playGame(){playSequence(gameSeq,$('gameSequence'),false,Number($('gameBpm').value),()=>{$('gameStatus').textContent='Round complete.'})}
+$('gameReplay').onclick=playGame;$('advance').onclick=()=>{stopPlayback();if(gameRound>=20){$('roundLabel').textContent='Game complete';$('gameSequence').innerHTML='';$('gameStatus').textContent='Congratulations, you completed the game';$('advance').textContent='Play Again';$('advance').onclick=()=>{gameRound=1;$('advance').textContent='Advance';$('advance').onclick=advanceGame;startGameRound()};return}gameRound++;startGameRound()};
+function advanceGame(){if(gameRound>=20){$('roundLabel').textContent='Game complete';$('gameStatus').textContent='Congratulations, you completed the game';$('advance').textContent='Play Again';$('advance').onclick=()=>{gameRound=1;$('advance').textContent='Advance';$('advance').onclick=advanceGame;startGameRound()};return}gameRound++;startGameRound()}
+$('gameBpm').addEventListener('change',()=>{$('gameTempoLabel').textContent=$('gameBpm').value+' BPM';savePrefs()});
+async function updateSamples(){let keys=await dbAll();$('sampleBadge').textContent=keys.length+' samples';$('calCount').textContent=keys.length+' / '+pitches.length;$('recordList').innerHTML='';pitches.forEach(m=>{let el=document.createElement('div');el.className='record-item';el.innerHTML='<span>'+midiFull(m)+'</span><span class="dot '+(keys.includes(m)?'done':'')+'"></span>';el.title=keys.includes(m)?'Recorded':'Not recorded';$('recordList').appendChild(el)});}
+function countIn(){return new Promise(resolve=>{let n=4;$('recordStatus').textContent='Get ready… '+n;const tick=()=>{n--;if(n>0){$('recordStatus').textContent='Get ready… '+n;recTimer=setTimeout(tick,600)}else{$('recordStatus').textContent='Pluck the note now — recording';resolve()}};recTimer=setTimeout(tick,600)})}
+async function startMeter(){try{if(!stream)stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();let source=audioCtx.createMediaStreamSource(stream),an=audioCtx.createAnalyser();an.fftSize=256;source.connect(an);let data=new Uint8Array(an.frequencyBinCount);const loop=()=>{an.getByteTimeDomainData(data);let rms=Math.sqrt(data.reduce((s,v)=>s+(v-128)**2,0)/data.length);$('micMeter').style.width=Math.min(100,rms*1.6)+'%';meterRAF=requestAnimationFrame(loop)};loop();return true}catch(e){$('recordStatus').textContent='Microphone unavailable: '+e.message;return false}}
+$('recordBtn').onclick=async()=>{if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){$('recordStatus').textContent='This browser does not support microphone recording. Open the GitHub Pages site in a current browser over HTTPS.';return}
+try{$('recordBtn').disabled=true;$('recordProgress').style.width='0%';if(!await startMeter())return;await countIn();chunks=[];let mime=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(t=>MediaRecorder.isTypeSupported(t));recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=async()=>{try{let blob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});await dbPut(Number($('recordPitch').value),blob);$('recordStatus').textContent='Recording saved on this device.';await updateSamples()}catch(e){$('recordStatus').textContent='Could not save recording: '+e.message}finally{$('recordBtn').disabled=false;$('recordProgress').style.width='100%';cancelAnimationFrame(meterRAF);$('micMeter').style.width='0%'}};recorder.start();let elapsed=0;const p=()=>{elapsed+=100;$('recordProgress').style.width=Math.min(100,elapsed/30)+'%';if(elapsed<3000&&recorder?.state==='recording')recTimer=setTimeout(p,100)};p();recTimer=setTimeout(()=>{if(recorder?.state==='recording')recorder.stop()},3000)}catch(e){$('recordStatus').textContent='Recording failed: '+e.message;$('recordBtn').disabled=false}};
+$('playSample').onclick=async()=>{try{let m=Number($('recordPitch').value);await playOne(m);$('recordStatus').textContent='Playing recorded '+midiFull(m)+'.'}catch(e){$('recordStatus').textContent=e.message}};
+$('clearSamples').onclick=async()=>{if(!confirm('Delete all recorded pitches from this browser on this device? This cannot be undone.'))return;await dbClear();await updateSamples();$('recordStatus').textContent='All local recordings cleared.'};
+$('recordPitch').addEventListener('change',async()=>{let b=await dbGet(Number($('recordPitch').value));$('playSample').disabled=!b});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopPlayback();if(recorder?.state==='recording')recorder.stop()}});
+window.addEventListener('pagehide',()=>{stopPlayback();if(stream)stream.getTracks().forEach(t=>t.stop())});
+updateSamples().then(()=>{$('playSample').disabled=true});
+})();
+</script>
+</body></html>
