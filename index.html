@@ -136,8 +136,53 @@ $('fretStart').onclick=()=>{nextFret();$('fretStart').classList.add('hidden')};$
 $('startGame').onclick=()=>{gameRound=1;startGameRound()};
 function startGameRound(){stopPlayback();$('gameIntro').classList.add('hidden');$('gamePlay').classList.remove('hidden');gameSeq=randomSeq(gameRound);$('roundLabel').textContent='Round '+gameRound+' · '+gameRound+' '+(gameRound===1?'note':'notes');$('gameTempoLabel').textContent=$('gameBpm').value+' BPM';renderSeq($('gameSequence'),gameSeq,false);$('gameStatus').textContent='Listen, then advance when ready.';playGame()}
 function playGame(){playSequence(gameSeq,$('gameSequence'),false,Number($('gameBpm').value),()=>{$('gameStatus').textContent='Round complete.'})}
-$('gameReplay').onclick=playGame;$('advance').onclick=()=>{stopPlayback();if(gameRound>=20){$('roundLabel').textContent='Game complete';$('gameSequence').innerHTML='';$('gameStatus').textContent='Congratulations, you completed the game';$('advance').textContent='Play Again';$('advance').onclick=()=>{gameRound=1;$('advance').textContent='Advance';$('advance').onclick=advanceGame;startGameRound()};return}gameRound++;startGameRound()};
-function advanceGame(){if(gameRound>=20){$('roundLabel').textContent='Game complete';$('gameStatus').textContent='Congratulations, you completed the game';$('advance').textContent='Play Again';$('advance').onclick=()=>{gameRound=1;$('advance').textContent='Advance';$('advance').onclick=advanceGame;startGameRound()};return}gameRound++;startGameRound()}
+$('gameReplay').onclick=playGame;
+
+$('advance').onclick=advanceGame;
+
+$('gameReveal').onclick=()=>{
+
+  stopPlayback();
+
+  renderSeq($('gameSequence'),gameSeq,true);
+
+  $('gameStatus').textContent='Round '+gameRound+' revealed.';
+
+};
+
+function advanceGame(){
+
+  if(gameRound>=20){
+
+    $('roundLabel').textContent='Game complete';
+
+    $('gameSequence').innerHTML='';
+
+    $('gameStatus').textContent='Congratulations, you completed the game';
+
+    $('advance').textContent='Play Again';
+
+    $('advance').onclick=()=>{
+
+      gameRound=1;
+
+      $('advance').textContent='Advance';
+
+      $('advance').onclick=advanceGame;
+
+      startGameRound();
+
+    };
+
+    return;
+
+  }
+
+  gameRound++;
+
+  startGameRound();
+
+}
 $('gameBpm').addEventListener('change',()=>{$('gameTempoLabel').textContent=$('gameBpm').value+' BPM';savePrefs()});
 async function updateSamples(){let keys=await dbAll();$('sampleBadge').textContent=keys.length+' samples';$('calCount').textContent=keys.length+' / '+pitches.length;$('recordList').innerHTML='';pitches.forEach(m=>{let el=document.createElement('div');el.className='record-item';el.innerHTML='<span>'+midiFull(m)+'</span><span class="dot '+(keys.includes(m)?'done':'')+'"></span>';el.title=keys.includes(m)?'Recorded':'Not recorded';$('recordList').appendChild(el)});}
 function countIn(){return new Promise(resolve=>{let n=4;$('recordStatus').textContent='Get ready… '+n;const tick=()=>{n--;if(n>0){$('recordStatus').textContent='Get ready… '+n;recTimer=setTimeout(tick,600)}else{$('recordStatus').textContent='Pluck the note now — recording';resolve()}};recTimer=setTimeout(tick,600)})}
